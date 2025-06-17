@@ -2,131 +2,353 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profissões do Futuro — 2070</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profissões do Futuro - 2070</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #f2f2f2;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #e0f7f4;
+      margin: 0; padding: 20px;
+      line-height: 1.6;
     }
-    header {
-      background-color: #0a0a23;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-    .container {
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-    }
-    .tab-button {
-      background-color: #e0e0e0;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      cursor: pointer;
+    .collapsible-header {
+      background-color: #00ffc8;
+      color: #00332f;
+      padding: 16px;
       border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ffc8;
+      transition: background 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
-    .tab-button.active {
-      background-color: #007BFF;
-      color: white;
+    .collapsible-header:hover {
+      background-color: #00e6b8;
     }
-    .content {
-      display: none;
-      animation: fadeIn 0.4s ease-in-out;
+    .collapsible-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
     }
-    .content.active {
-      display: block;
+    .collapsible-content.open {
+      max-height: 1000px;
+      opacity: 1;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .toggle-icon {
+      transition: transform 0.3s ease;
+    }
+    .collapsible-header.open .toggle-icon {
+      transform: rotate(180deg);
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
-      border-radius: 10px;
+      margin-bottom: 40px;
+      background: rgba(0, 255, 204, 0.05);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
     }
     th, td {
-      padding: 1rem;
-      border-bottom: 1px solid #ddd;
+      padding: 14px 18px;
+      border-bottom: 1px solid #004d40;
       text-align: left;
     }
     th {
-      background-color: #f9f9f9;
-      font-weight: bold;
+      background: #004d40;
+      color: #a0f0e7;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .content {
+      opacity: 0;
+      transform: translateY(50px);
+      margin-bottom: 60px;
+    }
+    canvas {
+      max-width: 700px;
+      margin: 0 auto 60px auto;
+      display: block;
+      box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+      border-radius: 16px;
+      background: #022e2f;
+    }
+    .video-wrapper {
+      max-width: 720px;
+      margin: 0 auto 60px auto;
+      box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+    }
+    .video-wrapper h3 {
+      color: #00ffc8;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-shadow: 0 0 8px #00ffc8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Profissões do Futuro — Visão 2070</h1>
-    <p>Baseado em tendências do Fórum Econômico Mundial</p>
-  </header>
-  <div class="container">
-    <div class="tabs">
-      <button class="tab-button active" onclick="showTab('tecnologia')">Tecnologia</button>
-      <button class="tab-button" onclick="showTab('saude')">Saúde</button>
-      <button class="tab-button" onclick="showTab('educacao')">Educação</button>
-      <button class="tab-button" onclick="showTab('industria')">Indústria</button>
-      <button class="tab-button" onclick="showTab('juridico')">RH, Finanças e Jurídico</button>
-      <button class="tab-button" onclick="showTab('marketing')">Marketing</button>
-      <button class="tab-button" onclick="showTab('esportes')">Esportes</button>
-      <button class="tab-button" onclick="showTab('sustentabilidade')">Sustentabilidade</button>
-    </div>
-    <div id="tecnologia" class="content active">
-      <table>
-        <thead>
-          <tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Engenheiro de IA</td><td>Cria sistemas inteligentes autônomos</td><td>Engenharia, Ciência da Computação</td></tr>
-          <tr><td>Especialista em Cibersegurança Quântica</td><td>Protege dados contra ataques quânticos</td><td>Cibersegurança, Física Quântica</td></tr>
-          <tr><td>Designer de Realidades Imersivas</td><td>Cria ambientes virtuais para ensino e trabalho</td><td>Design Digital, Jogos</td></tr>
-          <tr><td>Programador de Interfaces Neurais</td><td>Conecta cérebro com dispositivos</td><td>Neuroengenharia, Computação</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="saude" class="content">
-      <table>
-        <thead>
-          <tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Bioengenheiro de Órgãos</td><td>Impressão 3D de órgãos humanos</td><td>Bioengenharia, Biotecnologia</td></tr>
-          <tr><td>Nanomédico</td><td>Trata doenças com nanotecnologia</td><td>Medicina, Nanotecnologia</td></tr>
-          <tr><td>Gestor de Saúde Digital</td><td>Monitora e trata à distância</td><td>TI em Saúde, Medicina</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- Outras áreas: educação, indústria, jurídico, marketing, esportes, sustentabilidade podem ser adicionadas da mesma forma -->
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-brain"></i> Tecnologia e Informação</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Especialista em Inteligência Artificial e Machine Learning</td><td>Desenvolve sistemas que aprendem com dados</td><td>Ciência da Computação, IA</td></tr>
+        <tr><td>Engenheiro de Robótica</td><td>Cria e mantém robôs com sensores e IA</td><td>Engenharia, Robótica</td></tr>
+        <tr><td>Cientista de Dados / Analista de Big Data</td><td>Analisa dados para gerar insights</td><td>Estatística, Computação</td></tr>
+        <tr><td>Especialista em Segurança da Informação</td><td>Protege sistemas contra ataques</td><td>Segurança, TI</td></tr>
+        <tr><td>Desenvolvedor de Software / Aplicações</td><td>Cria sistemas digitais e apps</td><td>Engenharia de Software</td></tr>
+        <tr><td>Especialista em Nuvem e DevOps</td><td>Garante estabilidade e escalabilidade</td><td>Infraestrutura, DevOps</td></tr>
+        <tr><td>Engenheiro de Blockchain</td><td>Desenvolve soluções descentralizadas</td><td>TI, Blockchain</td></tr>
+        <tr><td>Especialista em Transformação Digital</td><td>Melhora processos com tecnologia</td><td>Gestão, Tecnologia</td></tr>
+        <tr><td>Especialista em Realidade Virtual / Aumentada</td><td>Cria experiências imersivas</td><td>Design, Computação</td></tr>
+        <tr><td>Engenheiro de IA Generativa</td><td>Trabalha com IA criativa como GPT</td><td>IA, Computação</td></tr>
+      </tbody>
+    </table>
   </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-heartbeat"></i> Saúde</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Especialista em Telemedicina</td><td>Atende pacientes remotamente</td><td>Medicina, Tecnologia</td></tr>
+        <tr><td>Enfermeiro(a) especializado(a)</td><td>Atua em áreas críticas com especialização</td><td>Enfermagem</td></tr>
+        <tr><td>Terapeuta ocupacional / Fisioterapeuta</td><td>Reabilita pacientes com limitações</td><td>Fisioterapia, Terapia Ocupacional</td></tr>
+        <tr><td>Profissional de Saúde Mental</td><td>Trata demandas emocionais e transtornos</td><td>Psicologia, Psiquiatria</td></tr>
+        <tr><td>Técnico em Biotecnologia</td><td>Trabalha com genética e vacinas</td><td>Biotecnologia</td></tr>
+        <tr><td>Geneticista clínico</td><td>Analisa DNA para prever doenças</td><td>Genética, Medicina</td></tr>
+        <tr><td>Especialista em medicina personalizada</td><td>Personaliza tratamentos com base no paciente</td><td>Medicina, Genética</td></tr>
+        <tr><td>Analista de dados em saúde</td><td>Usa dados para otimizar cuidados</td><td>TI, Saúde</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-graduation-cap"></i> Educação</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Desenvolvedor de Conteúdo Digital Educacional</td><td>Cria materiais interativos para ensino</td><td>Pedagogia, Design Instrucional</td></tr>
+        <tr><td>Tutor/Professor Online</td><td>Ensina habilidades digitais remotamente</td><td>Educação, Tecnologia</td></tr>
+        <tr><td>Especialista em Tecnologia Educacional</td><td>Implementa ferramentas tecnológicas na educação</td><td>Educação, TI</td></tr>
+        <tr><td>Designer Instrucional</td><td>Planeja experiências de aprendizagem eficazes</td><td>Design Instrucional</td></tr>
+        <tr><td>Facilitador de Aprendizagem Ativa</td><td>Media grupos com projetos e desafios</td><td>Educação, Pedagogia</td></tr>
+        <tr><td>Mentor em Habilidades Socioemocionais</td><td>Desenvolve empatia, resiliência e liderança</td><td>Psicologia, Educação</td></tr>
+        <tr><td>Curador de Conteúdo Educacional com IA</td><td>Organiza conteúdos personalizados com IA</td><td>Educação, Ciência de Dados</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-industry"></i> Indústria</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Engenheiro de Materiais Inteligentes</td><td>Desenvolve materiais com propriedades adaptativas</td><td>Engenharia de Materiais</td></tr>
+        <tr><td>Engenheiro de Manufatura Avançada</td><td>Trabalha com impressão 3D e automação</td><td>Engenharia de Produção</td></tr>
+        <tr><td>Especialista em Indústria 4.0</td><td>Integra sistemas ciberfísicos na produção</td><td>Engenharia, Automação</td></tr>
+        <tr><td>Gestor de Inovação Industrial</td><td>Promove modernização em fábricas</td><td>Engenharia, Administração</td></tr>
+        <tr><td>Engenheiro de Energia Inteligente</td><td>Trabalha com redes elétricas inteligentes (smart grids)</td><td>Engenharia Elétrica</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-briefcase"></i> RH, Finanças e Jurídico</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Gestor de Diversidade e Inclusão</td><td>Cria políticas inclusivas em organizações</td><td>RH, Ciências Sociais</td></tr>
+        <tr><td>Consultor de Ética e Compliance</td><td>Orienta empresas em boas práticas legais</td><td>Direito, Administração</td></tr>
+        <tr><td>Especialista em Finanças Sustentáveis</td><td>Integra sustentabilidade aos investimentos</td><td>Economia, ESG</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-bullhorn"></i> Marketing</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Consultor de Comportamento de Consumo</td><td>Estuda e orienta sobre hábitos de consumo</td><td>Psicologia, Marketing</td></tr>
+        <tr><td>Especialista em Marketing de Influência</td><td>Planeja campanhas com influenciadores</td><td>Comunicação, Marketing</td></tr>
+        <tr><td>Analista de Dados de Mercado</td><td>Monitora tendências e desempenho de campanhas</td><td>Estatística, Publicidade</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-running"></i> Esportes</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Preparador físico com foco em dados</td><td>Usa tecnologia para otimizar desempenho</td><td>Educação Física, Ciência de Dados</td></tr>
+        <tr><td>Especialista em E-sports</td><td>Treina atletas digitais e desenvolve estratégias</td><td>Educação Física, Jogos Digitais</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="content">
+  <h2 class="collapsible-header">
+    <span><i class="fas fa-leaf"></i> Sustentabilidade e Energia</span>
+    <i class="fas fa-chevron-down toggle-icon"></i>
+  </h2>
+  <div class="collapsible-content">
+    <table>
+      <thead><tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr></thead>
+      <tbody>
+        <tr><td>Gestor de Energia Renovável</td><td>Coordena projetos com fontes limpas</td><td>Engenharia Ambiental, Energias Renováveis</td></tr>
+        <tr><td>Especialista em ESG</td><td>Implementa boas práticas ambientais, sociais e de governança</td><td>Administração, Sustentabilidade</td></tr>
+        <tr><td>Engenheiro Ambiental</td><td>Resolve problemas ambientais com tecnologia</td><td>Engenharia Ambiental</td></tr>
+        <tr><td>Consultor de Sustentabilidade</td><td>Ajuda empresas a serem mais sustentáveis</td><td>Gestão Ambiental</td></tr>
+        <tr><td>Gestor de Resíduos e Reciclagem</td><td>Otimiza processos de descarte e reaproveitamento</td><td>Engenharia Sanitária, Gestão Ambiental</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+  <canvas id="graficoProfissoes"></canvas>
+
+  <div class="video-wrapper">
+    <h3><i class="fas fa-video"></i> Visão do Futuro</h3>
+    <video controls>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo.
+    </video>
+  </div>
+
   <script>
-    function showTab(id) {
-      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
-      document.querySelector(`#${id}`).classList.add('active');
-      event.target.classList.add('active');
-    }
+    gsap.utils.toArray('.content').forEach((section, i) => {
+      gsap.to(section, {
+        duration: 1,
+        opacity: 1,
+        y: 0,
+        delay: i * 0.4,
+        ease: 'power3.out'
+      });
+    });
+
+    document.querySelectorAll('.collapsible-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.classList.toggle('open');
+        const content = header.nextElementSibling;
+        content.classList.toggle('open');
+      });
+    });
+
+    const ctx = document.getElementById('graficoProfissoes').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Tecnologia', 'Saúde', 'Educação', 'Indústria', 'Marketing', 'Sustentabilidade'],
+        datasets: [{
+          label: 'Demanda em 2070',
+          data: [95, 90, 80, 85, 88, 92],
+          fill: true,
+          backgroundColor: 'rgba(0, 255, 204, 0.2)',
+          borderColor: 'rgba(0, 255, 204, 1)',
+          pointBackgroundColor: 'rgba(0, 255, 204, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(0, 255, 204, 1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          r: {
+            angleLines: { color: '#004d40' },
+            grid: { color: '#004d40' },
+            pointLabels: {
+              color: '#00ffc8',
+              font: { size: 14, weight: 'bold' }
+            },
+            ticks: {
+              backdropColor: '#022e2f',
+              color: '#00ffc8',
+              stepSize: 20,
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#00ffc8',
+              font: { size: 14, weight: 'bold' }
+            }
+          },
+          title: {
+            display: true,
+            text: 'Demanda por Área em 2070',
+            color: '#00ffc8',
+            font: { size: 20, weight: 'bold' }
+          }
+        }
+      }
+    });
   </script>
 </body>
 </html>
