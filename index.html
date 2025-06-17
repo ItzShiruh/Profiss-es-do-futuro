@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profissões do Futuro — 2070</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #f2f2f2;
+      color: #333;
+    }
+    header {
+      background-color: #0a0a23;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+    }
+    .tab-button {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .tab-button.active {
+      background-color: #007BFF;
+      color: white;
+    }
+    .content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #f9f9f9;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Profissões do Futuro — Visão 2070</h1>
+    <p>Baseado em tendências do Fórum Econômico Mundial</p>
+  </header>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-button active" onclick="showTab('tecnologia')">Tecnologia</button>
+      <button class="tab-button" onclick="showTab('saude')">Saúde</button>
+      <button class="tab-button" onclick="showTab('educacao')">Educação</button>
+      <button class="tab-button" onclick="showTab('industria')">Indústria</button>
+      <button class="tab-button" onclick="showTab('juridico')">RH, Finanças e Jurídico</button>
+      <button class="tab-button" onclick="showTab('marketing')">Marketing</button>
+      <button class="tab-button" onclick="showTab('esportes')">Esportes</button>
+      <button class="tab-button" onclick="showTab('sustentabilidade')">Sustentabilidade</button>
+    </div>
+    <div id="tecnologia" class="content active">
+      <table>
+        <thead>
+          <tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Engenheiro de IA</td><td>Cria sistemas inteligentes autônomos</td><td>Engenharia, Ciência da Computação</td></tr>
+          <tr><td>Especialista em Cibersegurança Quântica</td><td>Protege dados contra ataques quânticos</td><td>Cibersegurança, Física Quântica</td></tr>
+          <tr><td>Designer de Realidades Imersivas</td><td>Cria ambientes virtuais para ensino e trabalho</td><td>Design Digital, Jogos</td></tr>
+          <tr><td>Programador de Interfaces Neurais</td><td>Conecta cérebro com dispositivos</td><td>Neuroengenharia, Computação</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="saude" class="content">
+      <table>
+        <thead>
+          <tr><th>Profissão</th><th>Descrição</th><th>Formação</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bioengenheiro de Órgãos</td><td>Impressão 3D de órgãos humanos</td><td>Bioengenharia, Biotecnologia</td></tr>
+          <tr><td>Nanomédico</td><td>Trata doenças com nanotecnologia</td><td>Medicina, Nanotecnologia</td></tr>
+          <tr><td>Gestor de Saúde Digital</td><td>Monitora e trata à distância</td><td>TI em Saúde, Medicina</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Outras áreas: educação, indústria, jurídico, marketing, esportes, sustentabilidade podem ser adicionadas da mesma forma -->
+  </div>
+  <script>
+    function showTab(id) {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+      document.querySelector(`#${id}`).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
